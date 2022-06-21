@@ -1,0 +1,31 @@
+version: 0.2       
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+            
+    commands:
+      - echo Entering install phase...
+      - sudo su && yum update
+      - cd /opt
+      - wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz 
+      - tar -xvzf apache-maven-3.8.6-bin.tar.gz
+      - mv apache-maven-3.8.6 maven
+      - cd maven
+      - export PATH=/opt/maven/bin:$PATH
+      
+
+    
+  pre_build:
+    commands: 
+      - echo "we are in the pre build phase"
+      - yum install git -y
+ 
+    
+  build:
+    commands:
+      - echo "we are in the build block"
+      - cd /root/geostore/src
+      - mvn clean install -DskipTests 
+
+
